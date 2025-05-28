@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora ISDB-Tb</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f4f8;
+      color: #333;
+      padding: 20px;
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #003366;
+      margin-bottom: 5px;
+    }
+
+    h3 {
+      text-align: center;
+      color: #003366;
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+
+    fieldset {
+      background-color: #ffffff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    legend {
+      font-weight: bold;
+      color: #003366;
+    }
+
+    label, select, input {
+      display: block;
+      margin: 5px 0 10px;
+      width: 100%;
+      max-width: 250px;
+    }
+
+    .contenedor-capas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-around;
+    }
+
+    button {
+      background-color: #0066cc;
+      color: white;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    button:hover {
+      background-color: #004d99;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    li {
+      padding: 5px 0;
+    }
+
+    #advertencia {
+      color: red;
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    @media screen and (max-width: 768px) {
+      .contenedor-capas {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>UNIVERSIDAD DE LAS FUERZAS ARMADAS</h1>
+  <h2>DEPARTAMENTO DE ELÉCTRICA Y ELECTRÓNICA</h2>
+  <h3>INTEGRANTES: STEVEN ROGEL - JHON GUITARRA</h3>
+
+  <h2>Calculadora de Tasa de Bit - ISDB-Tb</h2>
+
+  <div class="contenedor-capas">
+    <!-- Capa A -->
+    <fieldset>
+      <legend>Capa A</legend>
+      <label for="segA">Segmentos:</label>
+      <input type="number" id="segA" min="0" max="13" value="1">
+
+      <label for="modA">Modulación:</label>
+      <select id="modA">
+        <option value="QPSK">QPSK</option>
+        <option value="16QAM">16QAM</option>
+        <option value="64QAM">64QAM</option>
+      </select>
+
+      <label for="rcA">Rc:</label>
+      <select id="rcA">
+        <option value="0.5">1/2</option>
+        <option value="0.666">2/3</option>
+        <option value="0.75">3/4</option>
+        <option value="0.833">5/6</option>
+        <option value="0.875">7/8</option>
+      </select>
+    </fieldset>
+
+    <!-- Capa B -->
+    <fieldset>
+      <legend>Capa B</legend>
+      <label for="segB">Segmentos:</label>
+      <input type="number" id="segB" min="0" max="13" value="12">
+
+      <label for="modB">Modulación:</label>
+      <select id="modB">
+        <option value="QPSK">QPSK</option>
+        <option value="16QAM">16QAM</option>
+        <option value="64QAM">64QAM</option>
+      </select>
+
+      <label for="rcB">Rc:</label>
+      <select id="rcB">
+        <option value="0.5">1/2</option>
+        <option value="0.666">2/3</option>
+        <option value="0.75">3/4</option>
+        <option value="0.833">5/6</option>
+        <option value="0.875">7/8</option>
+      </select>
+    </fieldset>
+
+    <!-- Capa C -->
+    <fieldset>
+      <legend>Capa C</legend>
+      <label for="segC">Segmentos:</label>
+      <input type="number" id="segC" min="0" max="13" value="0">
+
+      <label for="modC">Modulación:</label>
+      <select id="modC">
+        <option value="QPSK">QPSK</option>
+        <option value="16QAM">16QAM</option>
+        <option value="64QAM">64QAM</option>
+      </select>
+
+      <label for="rcC">Rc:</label>
+      <select id="rcC">
+        <option value="0.5">1/2</option>
+        <option value="0.666">2/3</option>
+        <option value="0.75">3/4</option>
+        <option value="0.833">5/6</option>
+        <option value="0.875">7/8</option>
+      </select>
+    </fieldset>
+  </div>
+
+  <!-- Tiempo de guarda -->
+  <fieldset>
+    <legend>Parámetros Generales</legend>
+    <label for="alfa">Tiempo de guarda (alfa):</label>
+    <select id="alfa">
+      <option value="0.25">1/4</option>
+      <option value="0.125">1/8</option>
+      <option value="0.0625">1/16</option>
+      <option value="0.03125">1/32</option>
+    </select>
+  </fieldset>
+
+  <button onclick="calcularTasa()">Calcular Tasa de Bit</button>
+
+  <h3 id="advertencia"></h3>
+
+  <h3>Resultados:</h3>
+  <ul>
+    <li>Tasa Capa A: <span id="resA">--</span> Mbps</li>
+    <li>Tasa Capa B: <span id="resB">--</span> Mbps</li>
+    <li>Tasa Capa C: <span id="resC">--</span> Mbps</li>
+    <li><strong>Tasa Total: <span id="resultado">--</span> Mbps</strong></li>
+  </ul>
+
+  <script>
+    function calcularTasa() {
+      const capas = ['A', 'B', 'C'];
+      const M_vals = { 'QPSK': 4, '16QAM': 16, '64QAM': 64 };
+      const alfa = parseFloat(document.getElementById('alfa').value);
+      const K = (188 / 204);
+      let sumaSegmentos = 0;
+      let tasaTotal = 0;
+      let tasas = { A: 0, B: 0, C: 0 };
+
+      capas.forEach(capa => {
+        const segmentos = parseInt(document.getElementById(`seg${capa}`).value);
+        const modulacion = document.getElementById(`mod${capa}`).value;
+        const rc = parseFloat(document.getElementById(`rc${capa}`).value);
+        sumaSegmentos += segmentos;
+
+        if (segmentos > 0) {
+          const M = M_vals[modulacion];
+          const Rb = (8 * K * rc * segmentos * Math.log2(M)) / (21 * (1 + alfa));
+          tasas[capa] = Rb;
+          tasaTotal += Rb;
+        } else {
+          tasas[capa] = 0;
+        }
+      });
+
+      if (sumaSegmentos > 13) {
+        document.getElementById("advertencia").textContent = "⚠️ Error: La suma de segmentos excede 13. Corrige la configuración.";
+        document.getElementById("resultado").textContent = "--";
+        document.getElementById("resA").textContent = "--";
+        document.getElementById("resB").textContent = "--";
+        document.getElementById("resC").textContent = "--";
+      } else {
+        document.getElementById("advertencia").textContent = "";
+        document.getElementById("resA").textContent = tasas['A'].toFixed(3);
+        document.getElementById("resB").textContent = tasas['B'].toFixed(3);
+        document.getElementById("resC").textContent = tasas['C'].toFixed(3);
+        document.getElementById("resultado").textContent = tasaTotal.toFixed(3);
+      }
+    }
+  </script>
+</body>
+</html>
